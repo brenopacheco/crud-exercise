@@ -93,11 +93,3 @@ Or build docker image
 ```
 docker build . -t brightcove-crud:1.0.0
 ```
-
-<!-- TODO: -->
-
-1. Documention: README
-2. Dockerfile
-3. Github push
-4. Actions
-5. Deploy
