@@ -8,8 +8,8 @@ import {
   Put,
   Query,
   Req,
-  Request,
 } from '@nestjs/common'
+import { Request as ExpressRequest } from 'express'
 import {
   ApiExtraModels,
   ApiOperation,
@@ -45,7 +45,7 @@ export class MoviesController {
     @Param('account_id') account_id: string,
     @Query()
     query: ListMoviesQuery,
-    @Req() req: Request
+    @Req() req: ExpressRequest
   ): Promise<MoviesList> {
     const parsedQuery = listQuerySchema.safeParse(query)
     if (!parsedQuery.success) throw new ValidationError(parsedQuery.error)
@@ -55,7 +55,9 @@ export class MoviesController {
       page,
       limit
     )
-    const pagination = paginate(req.url, limit, page, count)
+    const fullUrl = `${req.protocol}://${req.headers.host}${req.url}`
+    const strippedUrl = fullUrl.replace(/\?.+/, '')
+    const pagination = paginate(strippedUrl, limit, page, count)
     return { items: movies, ...pagination }
   }
 
