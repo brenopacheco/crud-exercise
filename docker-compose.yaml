@@ -1,0 +1,50 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 5432:5432
+    volumes:
+      - brightcove:/var/lib/postgresql/data
+    networks:
+      - brightcove
+
+#   app:
+#     image: node:16-alpine
+#     command: npm run --prefix app start:dev
+#     volumes:
+#       - .:/app
+#     environment:
+#       - PORT=3000
+#       - DATABASE_URL=postgres://user:password@db:5432/postgres
+#       - ENV=dev
+#     ports:
+#       - 3000:3000
+#     networks:
+#       - brightcove
+
+  db-web:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@brightcove.com
+      - PGADMIN_DEFAULT_PASSWORD=password
+    ports:
+      - 3001:80
+    depends_on:
+      - db
+    networks:
+      - brightcove
+
+networks:
+  brightcove:
+    driver: bridge
+
+volumes:
+  brightcove:
+    driver: local

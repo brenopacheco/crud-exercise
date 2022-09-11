@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AccountData {
+  id         String   @id
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  movies     MovieData[]
+  @@map("accounts")
+}
+
+model MovieData {
+  id                 Int      @id @default(autoincrement())
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  original_title     String
+  published          Boolean
+  production_year    String
+  video_id           String
+  poster             String
+  production_country String[]
+  actors             String[]
+  directors          String[]
+  account            AccountData? @relation(fields: [account_id], references: [id])
+  account_id         String
+  @@unique(fields: [id, account_id], name: "key")
+  @@map("movies")
+}
