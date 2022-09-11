@@ -1,5 +1,7 @@
 ## Brightcove CRUD exercise
 
+See live: [https://crud-app-production.up.railway.app](https://crud-app-production.up.railway.app/)
+
 ### Description
 
 Specification: [Openapi](./openapi.yaml)
