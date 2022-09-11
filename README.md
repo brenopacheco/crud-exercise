@@ -1,5 +1,7 @@
 ## Brightcove CRUD exercise
 
+![Deploy workflow](https://github.com/brenopacheco/crud-exercise/actions/workflows/ci-cd.yml/badge.svg)
+
 See live: [https://crud-app-production.up.railway.app](https://crud-app-production.up.railway.app/)
 
 ### Description
